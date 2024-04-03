@@ -31,21 +31,38 @@ app.get('/api/calc', (req, res) => {
 app.post('/api/calc', (req, res) => {
     const data = req.body;
     const {pirmas, antras} = data;
-    
-    if (isNaN(+pirmas)) {
+    const limit = 14;
+
+    if (pirmas.length > limit) {
+        return res.send(JSON.stringify({
+            result: 'Pirmoji reiksme per didelis skaicius'
+        }))
+    }
+
+    if (antras.length > limit) {
+        return res.send(JSON.stringify({
+            result: 'Antroji reiksme per didelis skaicius'
+        }))
+    }
+
+    const first = pirmas.length === 0 ? 0 : +pirmas;
+    const second = antras.length === 0 ? 0 : +antras;
+
+    console.log(first, second)
+    if (isNaN(first)) {
         return res.send(JSON.stringify({
             result: 'Pirmoji reiksme nera skaicius',
         }));
     }
 
-    if (isNaN(+antras)) {
+    if (isNaN(second)) {
         return res.send(JSON.stringify({
             result: 'Antroji reiksme nera skaicius',
         }));
     }
 
     return res.send(JSON.stringify({
-        result: (+pirmas) + (+antras),
+        result: first + second,
     }));
 });
 
