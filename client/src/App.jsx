@@ -16,7 +16,17 @@ function App() {
   function handleFormSubmit(e) {
     e.preventDefault();
 
-    fetch('http://localhost:4820/api/calc')
+    fetch('http://localhost:4820/api/calc', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify({
+        pirmas: firstNumber,
+        antras: secondNumber,
+      }),
+    })
       .then(res => res.json())
       .then(data => setAnswer(data.result))
       .catch(e => console.error(e));
